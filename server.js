@@ -7,6 +7,10 @@ const cors = require('cors')
 const taskRoutes = require("./src/routes/taskRoute");
 const errorHandler = require("./src/middleware/errorMiddleware");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+
+
 const dotenv = require("dotenv")
 dotenv.config()
 
@@ -19,6 +23,8 @@ connectDb()
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 app.listen(process.env.PORT,() => {
